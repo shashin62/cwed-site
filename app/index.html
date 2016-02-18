@@ -1,91 +1,144 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body ng-app="cpApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+        <link rel="stylesheet" href="bower_components/textAngular/dist/textAngular.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="styles/main.css">
+<!--        <link rel="stylesheet" href="styles/fonts/fontello/css/fontello.css" type="text/css" media="screen" />-->
+        
+        <!-- endbuild -->
+    </head>
+    <body ng-app="cpApp" class="outside-bottom-bar-page">
+        <!-- Add your site or application content here -->
+        <!-- MAIN SLIDER -->
+        <section id="main-slider" class="flexslider fullscreen">      	
 
-    <!-- Add your site or application content here -->
-    <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> Satellizer</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="/#/">Home</a></li>
-            <li ng-if="isAuthenticated()"><a href="/#/profile">Profile</a></li>
-        </ul>
-        <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
-            <li><a href="/#/login">Login</a></li>
-            <li><a href="/#/signup">Sign up</a></li>
-        </ul>
-        <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-            <li><a href="/#/logout">Logout</a></li>
-        </ul>
-    </div>
+            <!-- NAVIGATION -->
+            <header id="nav-header">
+                <nav id="nav-bar" class="bottom-bar outside fluid-width block-color nav-center sticky-nav animation fadeIn">
 
-    <div ui-view></div>
+                    <div id="nav-wrapper">
+
+                        <!-- LOGO -->
+                        <div class="logo-wrapper">
+                            <!-- CSS LOGO --> 
+                            <a href="index.html">
+                                <div class="css-logo rounded">
+                                    <div class="css-logo-text">
+                                        <strong>G</strong><i class="de-icon-heart-1"></i><strong>D</strong>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- IMG LOGO 
+                            <div class="img-logo">
+                                    <img src="images/album/slide1.jpg">
+                            </div>-->
+                        </div>
+                        <!-- END of LOGO -->
+
+                        <div id="mobile-nav">
+                            <i class="de-icon-menu"></i>
+                        </div>
+
+                        <ul id="nav-menu" class="nav-smooth-scroll">
+                            <li class="first-child">
+                                <a href="#/profile">HOME</a>
+                            </li>                   			
+                            <li>
+                                <a href="#/login">LOGIN</a>
+                            </li>
+                            <li>
+                                <a href="#/signup">REGISTER</a>
+                            </li>
+                            <li>
+                                <a href="#/grooms-men">GROOMSMEN</a>
+                            </li>
+                            <li class="first-child split-margin">
+                                <a href="#more-events">EVENTS</a>
+                            </li>
+                            <li>
+                                <a href="#/grooms-men">GALLERY</a>
+                            </li>
+                            <li>
+                                <a href="#bridesmaid-section">BRIDESMAID</a>
+                            </li>                           
+                            <li>
+                                <a href="#rsvp-section">RSVP</a>
+                            </li>
+
+                        </ul>
+
+                        <div class="clearboth"></div>
+
+                    </div>
+
+                </nav>
+            </header> <!-- END of NAVIGATION -->
+
+        </section><!-- ENF of MAIN SLIDER -->
+        
+        <div ui-view></div>
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-<!--     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-aria/angular-aria.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-messages/angular-messages.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/satellizer/satellizer.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+        <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+        <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+        <script src="bower_components/lodash/lodash.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/rangy/rangy-core.js"></script>
+        <script src="bower_components/rangy/rangy-classapplier.js"></script>
+        <script src="bower_components/rangy/rangy-highlighter.js"></script>
+        <script src="bower_components/rangy/rangy-selectionsaverestore.js"></script>
+        <script src="bower_components/rangy/rangy-serializer.js"></script>
+        <script src="bower_components/rangy/rangy-textrange.js"></script>
+        <script src="bower_components/textAngular/dist/textAngular.js"></script>
+        <script src="bower_components/textAngular/dist/textAngular-sanitize.js"></script>
+        <script src="bower_components/textAngular/dist/textAngularSetup.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>-->
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/satellizer/satellizer.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/directives/passwordStrength.js"></script>
-    <script src="scripts/directives/passwordMatch.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/home.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/signup.js"></script>
-    <script src="scripts/controllers/logout.js"></script>
-    <script src="scripts/controllers/profile.js"></script>
-    <script src="scripts/controllers/navbar.js"></script>
-    <script src="scripts/services/account.js"></script>
-    <script src="scripts/services/api.js"></script>
-    <script src="scripts/services/users.js"></script>
-    <!-- endbuild -->
-</body>
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/directives/passwordStrength.js"></script>
+        <script src="scripts/directives/passwordMatch.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/signup.js"></script>
+        <script src="scripts/controllers/logout.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/controllers/navbar.js"></script>
+        <script src="scripts/controllers/grooms-men.js"></script>
+        <script src="scripts/services/account.js"></script>
+        <script src="scripts/services/api.js"></script>
+        <script src="scripts/services/users.js"></script>
+        <!-- endbuild -->
+    </body>
 </html>

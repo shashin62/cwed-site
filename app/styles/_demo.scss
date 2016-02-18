@@ -1,0 +1,87 @@
+//colors
+$color_falcon_approx: #74626f;
+$white: #fff;
+$color_sushi_approx: #88b840;
+$color_quill_gray_approx: #d2d2d2;
+$color_desert_storm_approx: #f8f8f8;
+$color_alto_approx: #ddd;
+$blue:  blue;
+
+//fonts
+$font_0: proxima_nova_ltsemibold;
+
+@charset "utf-8";
+.btn {
+	&.btn-add-new {
+		background: $color_falcon_approx;
+		border: none;
+		color: $white !important;
+		text-transform: uppercase;
+		letter-spacing: .05em;
+		font-size: 15px;
+		font-family: $font_0;
+		padding: .6em 1.5em;
+		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+		border-radius: 3px !important;
+		//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		text-shadow: none !important;
+		&:before {
+			content: ' +';
+			display: inline-block;
+			opacity: .7;
+			color: $white !important;
+		}
+		&:hover {
+			background: $color_sushi_approx;
+			color: $white !important;
+		}
+		&:active {
+			background: $color_sushi_approx;
+			color: $white !important;
+		}
+		&:focus {
+			background: $color_sushi_approx;
+			color: $white !important;
+		}
+	}
+	&.btn-help {
+		background: $color_quill_gray_approx;
+		border: none;
+		color: $white !important;
+		text-transform: uppercase;
+		letter-spacing: .05em;
+		font-size: 15px;
+		font-family: $font_0;
+		padding: .6em 1.5em;
+		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+		border-radius: 3px !important;
+		//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		text-shadow: none !important;
+		&:before {
+			content: '?';
+			display: inline-block;
+			opacity: .7;
+		}
+		&:hover {
+			background: $color_sushi_approx;
+		}
+		&:active {
+			background: $color_sushi_approx;
+		}
+		&:focus {
+			background: $color_sushi_approx;
+		}
+	}
+}
+.drop-box {
+	background: $color_desert_storm_approx;
+	border: 5px dashed $color_alto_approx;
+	width: 200px;
+	height: 100px;
+	text-align: center;
+	padding-top: 25px;
+	margin: 10px;
+}
+.dragover {
+	border: 5px dashed $blue;
+}

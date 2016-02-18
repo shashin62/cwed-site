@@ -5,6 +5,10 @@ angular
         'ngAnimate',
         'toastr',
         'ui.router',
+        'ui.bootstrap',
+        'ngSanitize',
+        'ngFileUpload',
+        'textAngular',
         'satellizer']
     )
     .config(function ($stateProvider, $urlRouterProvider, $authProvider) {
@@ -30,6 +34,14 @@ angular
                         skipIfLoggedIn: skipIfLoggedIn
                     }
                 })
+                .state('groomsMen', {
+                    url: '/grooms-men',
+                    templateUrl: 'views/grooms-men.html',
+                    controller: 'GroomsMenCtrl',
+                    resolve: {
+                        skipIfLoggedIn: skipIfLoggedIn
+                    }
+                })
                 .state('logout', {
                     url: '/logout',
                     template: null,
@@ -47,11 +59,13 @@ angular
         $urlRouterProvider.otherwise('/');
 
         $authProvider.facebook({
-            clientId: '158250177576775'
+            clientId: '158250177576775',
+            url: 'http://cake3api.app/api/users/facebook.json'
         });
 
         $authProvider.google({
-            clientId: '829417752576-eok1lo1898psc2rqvb2drr8mc95iru5a.apps.googleusercontent.com'
+            clientId: '829417752576-eok1lo1898psc2rqvb2drr8mc95iru5a.apps.googleusercontent.com',
+            url: 'http://cake3api.app/api/users/google.json'
         });
 
         $authProvider.oauth2({

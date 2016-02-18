@@ -8,7 +8,7 @@
  * Controller of the cpApp
  */
 angular.module('cpApp')
-  .controller('LoginCtrl', function($scope, $location, $auth, toastr) {
+  .controller('LoginCtrl', function($scope, $location, $auth, toastr, $http) {
     $scope.login = function() {
       $auth.login($scope.user)
         .then(function() {
@@ -21,7 +21,25 @@ angular.module('cpApp')
     };
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
-        .then(function() {
+        .then(function(data) {
+          data = data.data;
+                            console.log('data:');
+                            console.log(data);
+ 
+        $http({
+            method: 'GET',
+            url: "http://cake3api.app/api/cocktails.json",
+            useXDomain: true,
+            headers: {'Authorization': 'Bearer ' + data.data.token}
+        })
+                .success(function (data, status, headers, config) {
+                    console.log(data);
+                })
+                .error(function (data, status, headers, config) {
+                    console.log('ERROR');
+                });
+          
+          
           toastr.success('You have successfully signed in with ' + provider + '!');
           $location.path('/');
         })

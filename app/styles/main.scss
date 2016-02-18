@@ -1,9 +1,13 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "font-awesome/scss/font-awesome.scss";
 // endbower
 
 @import "_angular-toastr.scss";
+@import "_style.scss";
+@import "_demo.scss";
+@import "_fontello.scss";
 
 //colors
 $color_mystic_approx: #e4e7ec;
