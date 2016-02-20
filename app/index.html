@@ -15,12 +15,31 @@
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="styles/main.css">
-<!--        <link rel="stylesheet" href="styles/fonts/fontello/css/fontello.css" type="text/css" media="screen" />-->
-        
+        <!--        <link rel="stylesheet" href="styles/fonts/fontello/css/fontello.css" type="text/css" media="screen" />-->
+
         <!-- endbuild -->
     </head>
     <body ng-app="cpApp" class="outside-bottom-bar-page">
         <!-- Add your site or application content here -->
+
+        <!--PRELOADER-->
+        <div id="preloader">
+            <div class="alignment">
+                <div class="v-align center-middle">
+
+                    <!-- LEFT HEART -->
+                    <div class="heart-animation">
+                        <i class="de-icon-heart"></i>
+                    </div>
+
+                    <!-- RIGHT HEART -->
+                    <div class="heart-animation-reverse">
+                        <i class="de-icon-heart"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!--END of PRELOADER-->
         <!-- MAIN SLIDER -->
         <section id="main-slider" class="flexslider fullscreen">      	
 
@@ -88,7 +107,7 @@
             </header> <!-- END of NAVIGATION -->
 
         </section><!-- ENF of MAIN SLIDER -->
-        
+
         <div ui-view></div>
 
 
@@ -121,11 +140,14 @@
         <script src="bower_components/textAngular/dist/textAngular.js"></script>
         <script src="bower_components/textAngular/dist/textAngular-sanitize.js"></script>
         <script src="bower_components/textAngular/dist/textAngularSetup.js"></script>
+        <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+        <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/config.js"></script>
         <script src="scripts/directives/passwordStrength.js"></script>
         <script src="scripts/directives/passwordMatch.js"></script>
         <script src="scripts/controllers/main.js"></script>
@@ -139,6 +161,14 @@
         <script src="scripts/services/account.js"></script>
         <script src="scripts/services/api.js"></script>
         <script src="scripts/services/users.js"></script>
+        <script src="scripts/services/grooms-men.js"></script>
+        <script src="scripts/services/social-login.js"></script>
+        <script src="scripts/services/authentication.js"></script>
+        <script src="scripts/services/remember-me.js"></script>
+        <script src="scripts/services/remember-me.js"></script>
+        <script src="scripts/services/user-info.js"></script>
+        <script src="scripts/services/loading-spinner.js"></script>
+        <script src="scripts/services/messages.js"></script>
         <!-- endbuild -->
     </body>
 </html>

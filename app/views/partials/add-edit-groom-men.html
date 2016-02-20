@@ -5,14 +5,14 @@
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-lg-12">
-            <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="member-name" placeholder="Name" ng-model="mData.name">
+            <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="member-name" placeholder="Name" ng-model="param.name">
         </div>
         <div class="form-group col-lg-12">
-            <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="member-position" placeholder="Position" ng-model="mData.position">
+            <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="member-position" placeholder="Position" ng-model="param.position">
         </div>
         <div class="form-group col-lg-12">
             <p class="input-group">
-                <input type="text" class="form-control" uib-datepicker-popup="{{date.format}}" ng-model="dt" is-open="popup1.opened"  datepicker-options="date.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <input type="text" class="form-control" uib-datepicker-popup="{{date.format}}" ng-model="param.date" is-open="popup1.opened"  datepicker-options="date.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
@@ -28,14 +28,14 @@
                 <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
                 Files:
                 <ul>
-                    <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
+                    <li ng-repeat="f in param.files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
                 </ul>
-                Upload Log:
-                <pre>{{log}}</pre>
+<!--                Upload Log:
+                <pre>{{log}}</pre>-->
             </div>
         </div>
         <div class="form-group col-lg-12">
-            <div text-angular ng-model="htmlVariable" ta-toolbar="[['bold','italics','underline','insertLink','clear','justifyLeft','justifyCenter','justifyRight']]"></div>
+            <div text-angular height="100px" ng-model="param.description" ta-toolbar="[['bold','italics','underline','insertLink','clear','justifyLeft','justifyCenter','justifyRight']]"></div>
         </div>
     </div>
 </div>

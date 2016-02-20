@@ -8,7 +8,7 @@
  * Controller of the cpApp
  */
 angular.module('cpApp')
-  .controller('LoginCtrl', function($scope, $location, $auth, toastr, $http) {
+  .controller('LoginCtrl', function($scope, $rootScope, $location, $auth, $state, LoadingSpinner, Authentication, RememberMe, userInfo, toastr) {
     $scope.login = function() {
       $auth.login($scope.user)
         .then(function() {

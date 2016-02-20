@@ -11,12 +11,30 @@
 
                 <div class="section-title animation fadeInUp">
                     <h2>
-                        GROOMSMEN
-                    </h2>
+                        <span data-editable="true" data-toggle="modal" data-target="#myModal" class="editor-tag ng-isolate-scope" ng-class="{'editor-on': hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" >
 
-                    <p>
+                            <h2 class="ng-scope">
+                                <span class="module-header-text ng-binding">
+                                    GROOMSMEN
+                                    <a href="" class="editor-remove-module ng-scope" ng-if="hover"><span class="glyphicon glyphicon-pencil"></span></a>
+                                </span>
+                            </h2>
+
+                        </span>
+
+                    </h2>
+                    <span data-editable="true" ng-click="method()" class="editor-tag ng-isolate-scope" ng-class="{'editor-on': hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" data-toggle="modal" data-target="#myModal2">
+
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices malesuada ante quis pharetra. Nullam notn bibendum dolor. Ut vel turpis accumsan, efficitur dolor fermentum, tincidunt metus. Etiam ut ultrices nibh.  Etiam aliquam mauris non hendrerit faucibus. Proin pulvinar congue  ex, vitae 
-                    </p>
+                        <a href="" class="editor-remove-module" ng-if="hover">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <!--                        <a ng-click="open();" class="editor-remove-module magnific-zoom">
+                                                    <div class="de-icon circle light medium-size inline">
+                                                        <i class="de-icon-pencil"></i>
+                                                    </div>
+                                                </a>-->
+                    </span>
 
 
                 </div>
@@ -28,7 +46,7 @@
         <div class="row">
 
             <!--GROOMSMEN-1-->
-            <div class="col-md-4" ng-repeat="man in groomsMen">
+            <div class="col-md-4" ng-repeat="groomsMen in groomsMens">
 
                 <!--GROOMSMEN-ITEM-->
                 <div class="groomsmen-item">
@@ -37,7 +55,7 @@
                     <div class="photo-item frame-border animation fadeIn">
 
                         <!--PHOTO-->
-                        <img src="{{man.image_url}}" alt="" class="hover-animation image-zoom-rotate">
+                        <img src="{{groomsMen.photo_url}}" alt="" class="hover-animation image-zoom-rotate">
 
                         <!--PHOTO OVERLAY-->
                         <div class="layer wh100 hidden-black-overlay hover-animation fade-in">
@@ -48,7 +66,7 @@
                             <div class="alignment">
                                 <div class="v-align center-middle">
 
-                                    <a ng-click="open();" class="magnific-zoom">
+                                    <a ng-click="open(groomsMen.id);" class="magnific-zoom">
                                         <div class="de-icon circle light medium-size inline">
                                             <i class="de-icon-pencil"></i>
                                         </div>
@@ -63,8 +81,8 @@
                     <!-- TITLE & EXCERPT -->
                     <div class="title-excerpt animation fadeIn text-center">
 
-                        <h3 class="no-margin"><a href="#">{{man.relation}}</a></h3>
-                        <p>{{man.name}}</p>
+                        <h3 class="no-margin"><a href="#">{{groomsMen.position}}</a></h3>
+                        <p>{{groomsMen.name}}</p>
 
                     </div><!-- END of TITLE & EXCERPT -->
 
@@ -73,8 +91,8 @@
             </div><!--END of GROOMSMEN-1-->
         </div>                   	
         <!-- END of ROW-2 -->
-        
-        
+
+
         <!-- START of ROW-3 -->
         <!-- START of BUTTONS -->
         <div class="row">
@@ -91,11 +109,63 @@
         </div>
         <!-- END of BUTTONS -->
         <!-- END of ROW-3 -->
-        
-        
+
+
     </div>
 
 </section>
 <script type="text/ng-template" id="myModalContent.html">
     <div ng-include="'views/partials/add-edit-groom-men.html'"></div>
 </script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="member-position" placeholder="" ng-model="hh">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal2" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="member-position" placeholder="" ng-model="gg">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
