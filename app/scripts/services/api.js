@@ -7,7 +7,7 @@ angular.module('cpApp')
 
     function urlForRoute(route) {
         var re = /^[\/]*(.*)$/;
-        return url + route.replace(re, '$1')+".json";
+        return url + route.replace(re, '$1');
     }
 
     return {

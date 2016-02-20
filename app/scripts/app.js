@@ -15,7 +15,9 @@ angular
             'LocalStorageModule',
             'satellizer']
                 )
-        .config(function ($stateProvider, $urlRouterProvider, $authProvider, localStorageServiceProvider, CacheFactoryProvider) {
+        .value('DEBUG', true)
+        .config(function ($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, localStorageServiceProvider, CacheFactoryProvider) {
+            $httpProvider.interceptors.push('authenticationHttpRequestInterceptor');
             angular.extend(CacheFactoryProvider.defaults, {
                 // This cache can hold 1000 items
                 capacity: 1000,
@@ -45,25 +47,16 @@ angular
                         url: '/login',
                         templateUrl: 'views/login.html',
                         controller: 'LoginCtrl',
-                        resolve: {
-                            skipIfLoggedIn: skipIfLoggedIn
-                        }
                     })
                     .state('signup', {
                         url: '/signup',
                         templateUrl: 'views/signup.html',
                         controller: 'SignupCtrl',
-                        resolve: {
-                            skipIfLoggedIn: skipIfLoggedIn
-                        }
                     })
                     .state('groomsMen', {
                         url: '/grooms-men',
                         templateUrl: 'views/grooms-men.html',
                         controller: 'GroomsMenCtrl',
-                        resolve: {
-                            skipIfLoggedIn: skipIfLoggedIn
-                        }
                     })
                     .state('logout', {
                         url: '/logout',
@@ -74,9 +67,6 @@ angular
                         url: '/profile',
                         templateUrl: 'views/profile.html',
                         controller: 'ProfileCtrl',
-                        resolve: {
-                            loginRequired: loginRequired
-                        }
                     });
 
             $urlRouterProvider.otherwise('/');
@@ -102,23 +92,172 @@ angular
                 authorizationEndpoint: 'https://foursquare.com/oauth2/authenticate'
             });
 
-            function skipIfLoggedIn($q, $auth) {
-                var deferred = $q.defer();
-                if ($auth.isAuthenticated()) {
-                    deferred.reject();
-                } else {
-                    deferred.resolve();
-                }
-                return deferred.promise;
-            }
+//            function skipIfLoggedIn($q, $auth) {
+//                var deferred = $q.defer();
+//                if ($auth.isAuthenticated()) {
+//                    deferred.reject();
+//                } else {
+//                    deferred.resolve();
+//                }
+//                return deferred.promise;
+//            }
+//
+//            function loginRequired($q, $location, $auth) {
+//                var deferred = $q.defer();
+//                if ($auth.isAuthenticated()) {
+//                    deferred.resolve();
+//                } else {
+//                    $location.path('/login');
+//                }
+//                return deferred.promise;
+//            }
+        })
+        .run(function (DEBUG, Users, $window, $rootScope, $state, $location, $timeout, Authentication, Messages, LoadingSpinner, localStorageService) {
 
-            function loginRequired($q, $location, $auth) {
-                var deferred = $q.defer();
-                if ($auth.isAuthenticated()) {
-                    deferred.resolve();
+//                $rootScope.$on("$stateChangeStart", function (event, next, current) {
+//                    // redirect to /login if is not logged  
+//                    if (!Authentication.isAuthenticated() && $state.is('login') === false) {
+//                        Authentication.logout(function (user) {
+//                            $state.go('login');
+//                        });
+//                        // also redirect when user is logged in and hits /login route      
+//                    } else if (Authentication.isAuthenticated() && $state.is('login')) {
+//                        $state.go('profile');
+//                    }
+//                });
+
+            $rootScope.token = localStorageService.get('token');
+            $rootScope.user_id = localStorageService.get('userId');
+
+            $rootScope.uiState = {
+                isCollapsed: true
+            };
+
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                // LoadingSpinner.show();
+                $rootScope.uiState.isCollapsed = true;
+                console.log('$rootScope.user_id:');
+                console.log($rootScope.user_id);
+
+                if (!$rootScope.user_id && toState.name !== 'login') {
+                    if (DEBUG) {
+                        console.warn('1');
+                    }
+
+                    event.preventDefault();
+                    //$state.go('login');
+                    LoadingSpinner.hide();
+                } else if (toState.name === 'login') {
+                    if (DEBUG) {
+                        console.warn('2');
+                    }
+
+                    if ($rootScope.currentUser) {
+                        // user is authed, so don't let go to login
+                        event.preventDefault();
+                        LoadingSpinner.hide();
+
+                        $timeout(function () {
+
+                            $state.go('profile');
+
+                        });
+                    }
+
+                    // proceed
+                } else if ($rootScope.user_id && _.isEmpty($rootScope.currentUser)) {
+                    if (DEBUG) {
+                        console.warn('3', toState, $rootScope.user_id, _.isEmpty($rootScope.currentUser));
+                    }
+
+                    // if there is a saved id
+                    event.preventDefault();
+
+                    Authentication.isAuthenticated().then(function () {
+                        if (DEBUG) {
+                            console.warn('3.5');
+                        }
+
+                        Users.setCurrentUser($rootScope.user_id).then(function () {
+                            if (DEBUG) {
+                                console.warn('3.6');
+                            }
+                            $state.go(toState, toParams);
+                        });
+                    }, function () {
+                        $state.go('login');
+                    });
                 } else {
-                    $location.path('/login');
+                    if (DEBUG) {
+                        console.warn('4 ' + toState.name);
+                    }
+                    // user should be logged in here
+                    Users.currentUser().then(function (user) {
+                        if (!user) {
+                            // user is logging out or in the onboarding process
+                            if (DEBUG) {
+                                console.warn('5');
+                            }
+                            return;
+                        }
+
+                        if (DEBUG) {
+                            console.warn('5.5\t' + toState.name );
+                        }
+                    });
                 }
-                return deferred.promise;
-            }
+            });
+
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                $rootScope.stateName = toState.name;
+
+                $rootScope.previousStateLink = fromState.name.length ? $state.href(fromState, fromParams) : '/#/';
+
+                Messages.clear();
+                LoadingSpinner.hide();
+
+                if (toState.name.indexOf('student') !== 0) {
+                    $rootScope.bodyClass = '';
+                }
+            });
+
+            $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+                LoadingSpinner.hide();
+                if (!(error && error.status === 401)) {
+                    console.warn(error);
+                } else if (error && error.status === 401) {
+                    $state.go('login');
+                }
+            });
+
+            // default
+            $rootScope.$on('$locationChangeStart', function () {
+                if ($location.path() === '' || $location.path() === '/') {
+                    console.log('toState:');
+                    console.log("$locationChangeStart");
+
+                    // this is the reroute the user to the right dashboard based on whether they are a student or an admin
+                    Authentication.isAuthenticated().then(function () {
+                        console.log('isAuthenticated:');
+                        console.log('isAuthenticated');
+                        Users.currentUser().then(function (user) {
+                            console.log('user:');
+                            console.log(user);
+
+                            if (!user) {
+                                $state.go('login');
+                                return;
+                            }
+
+
+                            $state.go('profile');
+
+                        });
+                    }, function () {
+                        $state.go('login');
+                    });
+                }
+            });
+
+
         });

@@ -8,51 +8,56 @@
  * Controller of the cpApp
  */
 angular.module('cpApp')
-  .controller('LoginCtrl', function($scope, $rootScope, $location, $auth, $state, LoadingSpinner, Authentication, RememberMe, userInfo, toastr) {
-    $scope.login = function() {
-      $auth.login($scope.user)
-        .then(function() {
-          toastr.success('You have successfully signed in!');
-          $location.path('/');
-        })
-        .catch(function(error) {
-          toastr.error(error.data.message, error.status);
-        });
-    };
-    $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
-        .then(function(data) {
-          data = data.data;
-                            console.log('data:');
-                            console.log(data);
- 
-        $http({
-            method: 'GET',
-            url: "http://cake3api.app/api/cocktails.json",
-            useXDomain: true,
-            headers: {'Authorization': 'Bearer ' + data.data.token}
-        })
-                .success(function (data, status, headers, config) {
-                    console.log(data);
-                })
-                .error(function (data, status, headers, config) {
-                    console.log('ERROR');
+        .controller('LoginCtrl', function ($scope, $rootScope, $location, $auth, $state, LoadingSpinner, Authentication, RememberMe, userInfo, toastr) {
+
+            $scope.credentials = {
+                email: RememberMe.recall()
+            };
+
+            $scope.remember = _.isString(RememberMe.recall());
+
+            $scope.login = function (credentials, remember) {
+                Authentication.clearLocalSession();
+                RememberMe.remember.apply(null, arguments);
+
+               // LoadingSpinner.show();
+
+                Authentication.login(credentials).then(function () {
+                    // transitioning to the root will automatically redirect to the correct 'default' page
+                    LoadingSpinner.hide();
+                    $location.path('/');
+                }, function () {
+                   LoadingSpinner.hide();
                 });
-          
-          
-          toastr.success('You have successfully signed in with ' + provider + '!');
-          $location.path('/');
-        })
-        .catch(function(error) {
-          if (error.error) {
-            // Popup error - invalid redirect_uri, pressed cancel button, etc.
-            toastr.error(error.error);
-          } else if (error.data) {
-            // HTTP response error from server
-            toastr.error(error.data.message, error.status);
-          } else {
-            toastr.error(error);
-          }
+            };
+
+            // Method to authenticate via social login accounts
+            $scope.authenticate = function (provider) {
+                //clear all the local session details
+                Authentication.clearLocalSession();
+
+                var auth = $auth.authenticate(provider);
+
+                auth.then(function (response) {
+                    //Successfull authentication - Found account with social login uid
+                    Authentication.createLocalSession(response.data).then(function () {
+                        $location.path('/');
+                    });
+                }, function (response) {
+                    LoadingSpinner.hide();
+                    var user = response.data.user;
+                    user.provider = provider;
+                    userInfo.setUser(user);
+                    switch (response.status) {
+                        case 403:
+                            // Account with Same email exists.
+                            $state.go('socialMapAuth');
+                            break;
+                        case 404:
+                            //No mapping found. So it is a new account.
+                            $state.go('signup');
+                            break;
+                    }
+                });
+            };
         });
-    };
-  });
