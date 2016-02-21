@@ -9,6 +9,8 @@ angular.module('cpApp').factory('Authentication', function Authentication($http,
         $rootScope.token = data.token;
         $rootScope.user_id = data.user_id;
         $rootScope.justSignedIn = true;
+        console.log('$rootScope.isAuthenticated:');
+        console.log($rootScope.isAuthenticated);
 
         localStorageService.set('userId', data.user_id);
         localStorageService.set('token', data.token);
@@ -63,7 +65,7 @@ angular.module('cpApp').factory('Authentication', function Authentication($http,
             clearUserDetails();
         },
         logout: function () {
-            return $http.delete(Api.urlForRoute('sessions')).success(function () {
+            return $http.delete(Api.urlForRoute('sessions/destroy')).success(function () {
                 clearUserDetails();
             });
         },
@@ -77,7 +79,6 @@ angular.module('cpApp').factory('Authentication', function Authentication($http,
                 dfd.resolve(true);
             } else {
                 storedToken = localStorageService.get('token');
-
                 if (storedToken) {
                     $http.put(Api.urlForRoute('sessions/ping')).success(function () {
                         dfd.resolve(true);
