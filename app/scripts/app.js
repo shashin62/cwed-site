@@ -136,8 +136,6 @@ angular
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
                 // LoadingSpinner.show();
                 $rootScope.uiState.isCollapsed = true;
-                console.log('$rootScope.user_id:');
-                console.log($rootScope.user_id);
 
                 if (!$rootScope.user_id && toState.name !== 'login') {
                     if (DEBUG) {
@@ -191,6 +189,7 @@ angular
                     if (DEBUG) {
                         console.warn('4 ' + toState.name);
                     }
+                    Authentication.isAuthenticated();
                     // user should be logged in here
                     Users.currentUser().then(function (user) {
                         if (!user) {
@@ -202,7 +201,7 @@ angular
                         }
 
                         if (DEBUG) {
-                            console.warn('5.5\t' + toState.name );
+                            console.warn('5.5\t' + toState.name);
                         }
                     });
                 }
@@ -233,22 +232,13 @@ angular
             // default
             $rootScope.$on('$locationChangeStart', function () {
                 if ($location.path() === '' || $location.path() === '/') {
-                    console.log('toState:');
-                    console.log("$locationChangeStart");
-
                     // this is the reroute the user to the right dashboard based on whether they are a student or an admin
                     Authentication.isAuthenticated().then(function () {
-                        console.log('isAuthenticated:');
-                        console.log('isAuthenticated');
                         Users.currentUser().then(function (user) {
-                            console.log('user:');
-                            console.log(user);
-
                             if (!user) {
                                 $state.go('login');
                                 return;
                             }
-
 
                             $state.go('profile');
 
