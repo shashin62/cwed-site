@@ -1,0 +1,144 @@
+//colors
+$color_falcon_approx: #74626f;
+$white: #fff;
+$color_sushi_approx: #88b840;
+$color_quill_gray_approx: #d2d2d2;
+$color_desert_storm_approx: #f8f8f8;
+$color_alto_approx: #ddd;
+$blue:  blue;
+
+//fonts
+$font_0: proxima_nova_ltsemibold;
+
+@charset "utf-8";
+.btn {
+	&.btn-add-new {
+		background: $color_falcon_approx;
+		border: none;
+		color: $white !important;
+		text-transform: uppercase;
+		letter-spacing: .05em;
+		font-size: 15px;
+		font-family: $font_0;
+		padding: .6em 1.5em;
+		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+		border-radius: 3px !important;
+		//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		text-shadow: none !important;
+		&:before {
+			content: ' +';
+			display: inline-block;
+			opacity: .7;
+			color: $white !important;
+		}
+		&:hover {
+			background: $color_sushi_approx;
+			color: $white !important;
+		}
+		&:active {
+			background: $color_sushi_approx;
+			color: $white !important;
+		}
+		&:focus {
+			background: $color_sushi_approx;
+			color: $white !important;
+		}
+	}
+	&.btn-help {
+		background: $color_quill_gray_approx;
+		border: none;
+		color: $white !important;
+		text-transform: uppercase;
+		letter-spacing: .05em;
+		font-size: 15px;
+		font-family: $font_0;
+		padding: .6em 1.5em;
+		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+		border-radius: 3px !important;
+		//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		text-shadow: none !important;
+		&:before {
+			content: '?';
+			display: inline-block;
+			opacity: .7;
+		}
+		&:hover {
+			background: $color_sushi_approx;
+		}
+		&:active {
+			background: $color_sushi_approx;
+		}
+		&:focus {
+			background: $color_sushi_approx;
+		}
+	}
+}
+.drop-box {
+	background: $color_desert_storm_approx;
+	border: 5px dashed $color_alto_approx;
+	width: 250px;
+	height: 100px;
+	text-align: center;
+	padding-top: 25px;
+	margin: 10px;
+}
+.dragover {
+	border: 5px dashed $blue;
+}
+
+[data-editable="true"] {
+    position: relative;
+    display: inline-block;
+    padding: 1px;
+    cursor: pointer;
+}
+.editor-on[data-editable] {
+    padding: 0px;
+    background: rgba(207,  229,  207,  0.3);
+    border: solid 1px rgba(107,  145,  97,  0.25);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
+.editor-on[data-editable] * {
+    opacity: .8;
+}
+.editor-on[data-editable] .editor-remove-module {
+    opacity: 1;
+}
+.editor-block[data-editable] {
+    display: block;
+}
+.editor-remove-module {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+    background: #9ea9a1;
+    opacity: 1;
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 300px;
+    -moz-border-radius: 300px;
+    -o-border-radius: 300px;
+    border-radius: 300px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    border: none;
+    text-decoration: none !important;
+}
+.editor-remove-module span {
+    display: block;
+    padding: 6px 0 0 0;
+    color: #fff;
+}
+
+#login-section {
+    padding: 25px 0;
+}
+
+#home-section {
+    padding: 175px 0;
+}

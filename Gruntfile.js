@@ -62,6 +62,7 @@ module.exports = function (grunt) {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
+          '<%= yeoman.app %>/views/**/*.html',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -413,6 +414,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
+            'fonts/*',
+            'font/*',
             'styles/fonts/{,*/}*.*'
           ]
         }, {
@@ -434,6 +437,29 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       }
     },
+    
+    bowerInstall: {
+        target: {
+          // Point to the files that should be updated when 
+          // you run `grunt bower-install` 
+          src: [
+            'app/views/**/*.html',   // .html support... 
+            'app/views/**/*.jade',   // .jade support... 
+            'app/styles/main.scss',  // .scss & .sass support... 
+            'app/config.yml'         // and .yml & .yaml support out of the box! 
+          ],
+
+          // Optional: 
+          // --------- 
+          cwd: '',
+          dependencies: true,
+          devDependencies: false,
+          exclude: [],
+          fileTypes: {},
+          ignorePath: '',
+          overrides: {}
+        }
+      },
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
@@ -513,4 +539,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  grunt.loadNpmTasks('grunt-bower-install');
 };

@@ -1,0 +1,56 @@
+  <div class="navbar navbar-fixed-top top">
+    <div class="large-area">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" ng-if="currentUser" ng-click="uiState.isCollapsed = !uiState.isCollapsed">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="logo-nav">
+                <a ui-sref=".dashboard">
+                    <img src="images/Academy Login_2.svg" style="max-height:53px; margin-left: 5px;" alt="Academy">
+                </a>
+            </div>
+        </div>
+
+        <div class="navbar-collapse collapse" ng-if="currentUser" collapse="uiState.isCollapsed">
+            <div class="navbar-inner">
+                <ul class="nav navbar-nav navbar-right navbar-collapse-hidden">
+                    <li dropdown>
+                        <a href dropdown-toggle>{{currentUser.first_name}} {{currentUser.last_name}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ui-sref=".profile">Edit Profile</a></li>
+                            <li><a ui-sref=".mapSocialAccounts">Map Social Account</a></li>
+                            <li class="navbar-collapse-visible" ng-if="currentUser.role == 'instructor' || currentUser.role == 'admin' ">
+                                <a ui-sref="admin.sentMessages">Sent messages</a>
+                            </li>
+
+                            <li ng-if="currentUser.role === 'student' "><a ui-sref=".inventory.education">Career Readiness Inventory</a></li>
+                            <li ng-if="currentUser.role === 'student' "><a ui-sref=".enroll">Enter Enrollment Key</a></li>
+                            <li class="divider"></li>
+                            <li><a ui-sref="logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav nav-middle" ng-class="{ 'main-nav-items' : uiState.isCollapsed }">
+                    <li ng-repeat="item in mainMenu" ng-class="{ active: item.route == stateName }">
+                        <a href ng-href="{{item.link}}">{{item.text}}</a>
+                    </li>
+                 </ul>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right navbar-collapse-visible">
+                <li class="navbar-collapse-visible"><a ui-sref=".profile">Edit Profile</a></li>
+                <li class="navbar-collapse-visible"><a ui-sref=".mapSocialAccounts">Map Social Account</a></li>
+                <li class="navbar-collapse-visible" ng-if="currentUser.role == 'instructor' || currentUser.role == 'admin' ">
+                    <a ui-sref="admin.sentMessages">Sent messages</a>
+                </li>
+                <li class="navbar-collapse-visible" ng-if="currentUser.role === 'student' "><a ui-sref=".inventory.education">Career Readiness Inventory</a></li>
+                <li class="navbar-collapse-visible" ng-if="currentUser.role === 'student' "><a ui-sref=".enroll">Enter Enrollment Key</a></li>
+                <li class="navbar-collapse-visible"><a ui-sref="logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
