@@ -13,6 +13,7 @@ angular
             'config',
             'angular-cache',
             'LocalStorageModule',
+            'ngImgCrop',
             'satellizer']
                 )
         .value('DEBUG', false)

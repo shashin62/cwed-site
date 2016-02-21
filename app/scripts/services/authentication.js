@@ -34,13 +34,6 @@ angular.module('cpApp').factory('Authentication', function Authentication($http,
     };
 
     var AuthenticationService = {
-        /**
-         * @description
-         * Try to authenticate with the given credentials. If successful, set rootScope.isAuthenticated to true
-         * @param {string} credentials.email - the user's email
-         * @param {string} credentials.password - the user's password
-         * @returns promise returns promise that will resolve/reject based on login success
-         */
         login: function (credentials) {
             var authPromise = $q.defer();
 
@@ -69,8 +62,6 @@ angular.module('cpApp').factory('Authentication', function Authentication($http,
                 clearUserDetails();
             });
         },
-        // Check if user is authenticated. Will check against the server, if the app is not sure.
-        // @returns {promise} that will resolve or fail based on the user's authentication
         isAuthenticated: function () {
             var dfd = $q.defer(),
                     storedToken;
