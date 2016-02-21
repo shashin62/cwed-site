@@ -15,7 +15,7 @@ angular
             'LocalStorageModule',
             'satellizer']
                 )
-        .value('DEBUG', true)
+        .value('DEBUG', false)
         .config(function ($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, localStorageServiceProvider, CacheFactoryProvider) {
             $httpProvider.interceptors.push('authenticationHttpRequestInterceptor');
             angular.extend(CacheFactoryProvider.defaults, {
@@ -189,7 +189,7 @@ angular
                     if (DEBUG) {
                         console.warn('4 ' + toState.name);
                     }
-                    Authentication.isAuthenticated();
+                    
                     // user should be logged in here
                     Users.currentUser().then(function (user) {
                         if (!user) {
