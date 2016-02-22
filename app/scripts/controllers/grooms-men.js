@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('cpApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, $timeout, Upload, groomsMens, menID, Api) {
+angular.module('cpApp').controller('ModalInstanceCtrl', function (SETTINGS, $scope, $uibModalInstance, $timeout, Upload, groomsMens, menID, Api) {
     // modal
     $scope.param = {};
     $scope.log = '';
+    $scope.apiURL = SETTINGS.ApiUrl;
     $scope.groomsMens = groomsMens;
     if (_.isInteger(menID)) {
         $scope.param = _.find($scope.groomsMens, {'id': menID});
@@ -28,6 +29,7 @@ angular.module('cpApp').controller('ModalInstanceCtrl', function ($scope, $uibMo
         }).then(function (response) {
             $timeout(function () {
                 $scope.param.result = response.data;
+                $uibModalInstance.close($scope.param.result);
             });
         }, function (response) {
             if (response.status > 0)
@@ -41,7 +43,8 @@ angular.module('cpApp').controller('ModalInstanceCtrl', function ($scope, $uibMo
 
 
 angular.module('cpApp')
-        .controller('GroomsMenCtrl', function ($scope, $state, $uibModal, $log, $http, GroomsMenService) {
+        .controller('GroomsMenCtrl', function ($scope, $state, $uibModal, $log, $http, GroomsMenService, SETTINGS) {
+            $scope.apiURL = SETTINGS.ApiUrl;
 
             GroomsMenService.get().then(function (response) {
                 $scope.groomsMens = response.data.groomsMens;
@@ -49,6 +52,7 @@ angular.module('cpApp')
 
             // Modal
             $scope.animationsEnabled = true;
+
             $scope.open = function (menID) {
                 var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
@@ -65,8 +69,20 @@ angular.module('cpApp')
 
                 modalInstance.result.then(function (selectedItem) {
                     $scope.selected = selectedItem;
+                    GroomsMenService.get().then(function (response) {
+                        $scope.groomsMens = response.data.groomsMens;
+                    });
+
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            $scope.deleteGroomsMen = function (gmID) {
+                return GroomsMenService.delete(gmID).then(function () {
+                    $scope.groomsMens = _.filter($scope.groomsMens, function (mens) {
+                        return mens.id !== gmID;
+                    });
                 });
             };
 

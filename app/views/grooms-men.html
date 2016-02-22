@@ -55,7 +55,7 @@
                     <div class="photo-item frame-border animation fadeIn">
 
                         <!--PHOTO-->
-                        <img src="{{groomsMen.photo_url}}" alt="" class="hover-animation image-zoom-rotate">
+                        <img src="{{apiURL}}../upload/avatar/{{groomsMen.photo_url}}" alt="" class="hover-animation image-zoom-rotate">
 
                         <!--PHOTO OVERLAY-->
                         <div class="layer wh100 hidden-black-overlay hover-animation fade-in">
@@ -71,8 +71,15 @@
                                             <i class="de-icon-pencil"></i>
                                         </div>
                                     </a>
+                                    <a xclass="magnific-ajax" ng-click="deleteGroomsMen(groomsMen.id)" confirm="Are you sure you want to delete, {{groomsMen.name}}?">
+                                        <div class="de-icon circle light medium-size inline">
+                                            <i class="de-icon-user-delete"></i>
+                                        </div>
+                                    </a>
 
                                 </div>
+
+
                             </div>
                         </div><!--END of ICON LINK-->
 

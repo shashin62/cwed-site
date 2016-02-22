@@ -13,6 +13,14 @@ angular.module('cpApp').factory('GroomsMenService', function ($http, $rootScope,
         return dfd.promise;
     };
 
+    GroomsMen.delete = function (gmID) {
+        if (!gmID) {
+            throw 'Missing parameter "groupId"';
+        }
+
+        return $http.delete(Api.urlForRoute('GroomsMens/delete/') + gmID);
+    };
+
 //    GroomsMen.getClasses = function (arr) {
 //        if (!arr) {
 //            throw 'Missing parameter "ids"';
