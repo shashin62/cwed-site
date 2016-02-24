@@ -55,7 +55,8 @@
                     <div class="photo-item frame-border animation fadeIn">
 
                         <!--PHOTO-->
-                        <img src="{{apiURL}}../upload/avatar/{{groomsMen.photo_url}}" alt="" class="hover-animation image-zoom-rotate">
+                        <img ng-if="groomsMen.photo_url" src="{{apiURL}}../upload/avatar/{{groomsMen.photo_url}}" alt="" class="hover-animation image-zoom-rotate">
+                        <img ng-if="!groomsMen.photo_url" src="{{apiURL}}../img/default.jpg" alt="" class="hover-animation image-zoom-rotate">
 
                         <!--PHOTO OVERLAY-->
                         <div class="layer wh100 hidden-black-overlay hover-animation fade-in">

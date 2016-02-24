@@ -21,6 +21,18 @@ angular.module('cpApp').factory('GroomsMenService', function ($http, $rootScope,
         return $http.delete(Api.urlForRoute('GroomsMens/delete/') + gmID);
     };
 
+    GroomsMen.removeAvatar = function (gmID) {
+        if (!gmID) {
+            throw 'Missing parameter';
+        }
+
+        var putData = {
+            photo_url: ''
+        };
+
+        return $http.put(Api.urlForRoute('GroomsMens/edit/') + gmID, putData);
+    };
+
 //    GroomsMen.getClasses = function (arr) {
 //        if (!arr) {
 //            throw 'Missing parameter "ids"';

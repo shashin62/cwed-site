@@ -1,29 +1,46 @@
 'use strict';
 
-angular.module('cpApp').controller('ModalInstanceCtrl', function (SETTINGS, $scope, $uibModalInstance, $timeout, Upload, groomsMens, menID, Api) {
+angular.module('cpApp').controller('ModalInstanceCtrl', function (GroomsMenService, SETTINGS, $scope, $uibModalInstance, $timeout, Upload, groomsMens, menID, Api) {
     // modal
     $scope.param = {};
     $scope.log = '';
     $scope.apiURL = SETTINGS.ApiUrl;
     $scope.groomsMens = groomsMens;
+
+    $scope.flag = {};
+    $scope.flag.showCrop = false;
+
     if (_.isInteger(menID)) {
         $scope.param = _.find($scope.groomsMens, {'id': menID});
-        $scope.param.date = '2016-02-15';
+        $scope.param.date = new Date();
+        $scope.flag.showAvatar = _.isEmpty($scope.param.photo_url) ? false : true;
     }
 
     $scope.ok = function () {
         $uibModalInstance.close($scope.selected.item);
     };
 
+    $scope.imgSelected = function () {
+        $scope.flag.showCrop = true;
+    };
+
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 
+    $scope.removeAvatar = function (menID) {
+        GroomsMenService.removeAvatar(menID).then(function (response) {
+            $scope.param = response.data.data.groomsMen;
+            $scope.flag.showAvatar = false;
+        });
+    };
+
     $scope.upload = function (dataUrl) {
+        var files = _.isEmpty($scope.param.photo_url) ? Upload.dataUrltoBlob(dataUrl) : null;
         Upload.upload({
             url: Api.urlForRoute('files/upload'),
             data: {
-                file: Upload.dataUrltoBlob(dataUrl),
+                file: files,
                 params: $scope.param
             },
         }).then(function (response) {
@@ -39,6 +56,25 @@ angular.module('cpApp').controller('ModalInstanceCtrl', function (SETTINGS, $sco
             $scope.param.progress = parseInt(100.0 * evt.loaded / evt.total);
         });
     };
+
+    // Datepicker
+    $scope.date = {};
+    $scope.date.popup1 = {
+        opened: false
+    };
+
+    $scope.date.open1 = function () {
+        $scope.popup1.opened = true;
+    };
+
+    $scope.date.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    $scope.date.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.date.format = $scope.date.formats[1];
+    $scope.date.altInputFormats = ['M!/d!/yyyy'];
 });
 
 
@@ -86,22 +122,5 @@ angular.module('cpApp')
                 });
             };
 
-            // Datepicker
-            $scope.date = {};
-            $scope.date.popup1 = {
-                opened: false
-            };
 
-            $scope.date.open1 = function () {
-                $scope.popup1.opened = true;
-            };
-
-            $scope.date.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
-
-            $scope.date.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            $scope.date.format = $scope.date.formats[0];
-            $scope.date.altInputFormats = ['M!/d!/yyyy'];
         });
