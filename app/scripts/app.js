@@ -159,7 +159,7 @@ angular
 
                         $timeout(function () {
 
-                            $state.go('profile');
+                            $state.go('grooms-men');
 
                         });
                     }
@@ -242,7 +242,7 @@ angular
                                 return;
                             }
 
-                            $state.go('profile');
+                            $state.go('grooms-men');
 
                         });
                     }, function () {
